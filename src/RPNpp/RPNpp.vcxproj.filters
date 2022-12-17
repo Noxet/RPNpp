@@ -15,7 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="RPNpp.cpp">
+    <ClCompile Include="app\RPNpp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="backend\stack.cppm">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
