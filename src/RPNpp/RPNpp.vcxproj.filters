@@ -21,13 +21,13 @@
     <ClCompile Include="backend\stack.cppm">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="utilities\publisher.cppm">
+    <ClCompile Include="utilities\publisher.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="utilities\observer.cppm">
+    <ClCompile Include="utilities\observer.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="utilities\exception.cppm">
+    <ClCompile Include="utilities\exception.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

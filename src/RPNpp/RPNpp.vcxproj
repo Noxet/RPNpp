@@ -143,9 +143,9 @@
   <ItemGroup>
     <ClCompile Include="app\RPNpp.cpp" />
     <ClCompile Include="backend\stack.cppm" />
-    <ClCompile Include="utilities\exception.cppm" />
-    <ClCompile Include="utilities\observer.cppm" />
-    <ClCompile Include="utilities\publisher.cppm" />
+    <ClCompile Include="utilities\exception.ixx" />
+    <ClCompile Include="utilities\observer.ixx" />
+    <ClCompile Include="utilities\publisher.ixx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
