@@ -1,3 +1,5 @@
+module;
+
 #include <any>
 #include <string>
 
@@ -10,21 +12,14 @@ namespace RPNpp
 	export class Observer
 	{
 	public:
-		explicit Observer(string &&name);
+		explicit Observer(string &&name) : m_name(std::move(name)) {}
+		virtual ~Observer() = default;
 
-		void onEvent(std::any data);
-		string name() const;
+		virtual void onEvent(const std::any &data) = 0;
+
+		string name() const { return m_name; };
 
 	private:
 		string m_name;
 	};
-
-	Observer::Observer(string &&name) : m_name{ std::move(name) } {}
-	void Observer::onEvent(std::any data) {}
-
-
-	string Observer::name() const
-	{
-		return m_name;
-	}
 }

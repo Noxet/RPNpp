@@ -18,7 +18,7 @@ using std::unordered_map;
 
 namespace RPNpp
 {
-	class Publisher
+	export class Publisher
 	{
 		using ObserverList = unordered_map<string, unique_ptr<Observer>>;
 		using Events = unordered_map<string, ObserverList>;
@@ -28,7 +28,6 @@ namespace RPNpp
 		unique_ptr<Observer> detach(const string &eventName, const string &observerName);
 		void notify(const string &eventName, std::any data) const;
 
-	protected:
 		void registerEvent(const string &eventName);
 		void unregisterEvent(const string &eventName);
 

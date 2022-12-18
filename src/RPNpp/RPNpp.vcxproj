@@ -118,6 +118,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <CompileAs>Default</CompileAs>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,10 +143,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="app\RPNpp.cpp" />
-    <ClCompile Include="backend\stack.cppm" />
+    <ClCompile Include="backend\stack.ixx" />
     <ClCompile Include="utilities\exception.ixx" />
     <ClCompile Include="utilities\observer.ixx" />
     <ClCompile Include="utilities\publisher.ixx" />
+    <ClCompile Include="utilities\utilities.ixx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -18,7 +18,7 @@
     <ClCompile Include="app\RPNpp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="backend\stack.cppm">
+    <ClCompile Include="backend\stack.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="utilities\publisher.ixx">
@@ -28,6 +28,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="utilities\exception.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utilities\utilities.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
