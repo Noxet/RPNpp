@@ -26,7 +26,11 @@ namespace RPNpp
 	public:
 		void attach(const string &eventName, unique_ptr<Observer> observer);
 		unique_ptr<Observer> detach(const string &eventName, const string &observerName);
-		void notify(const string &eventName, std::any d) const;
+		void notify(const string &eventName, std::any data) const;
+
+	protected:
+		void registerEvent(const string &eventName);
+		void unregisterEvent(const string &eventName);
 
 	private:
 		Events::const_iterator findCheckedEvent(const string &eventName) const;
@@ -69,6 +73,28 @@ namespace RPNpp
 		{
 			observer->onEvent(data);
 		}
+	}
+
+
+	void Publisher::registerEvent(const string &eventName)
+	{
+		if (m_events.contains(eventName))
+		{
+			throw Exception("Event already registered");
+		}
+
+		m_events[eventName] = ObserverList{};
+	}
+
+
+	void Publisher::unregisterEvent(const string &eventName)
+	{
+		if (!m_events.contains(eventName))
+		{
+			throw Exception("Event not registered");
+		}
+
+		m_events.erase(eventName);
 	}
 
 
