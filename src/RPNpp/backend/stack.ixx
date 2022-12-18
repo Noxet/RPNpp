@@ -5,7 +5,7 @@ module;
 #include <vector>
 #include <string>
 
-export module RPNpp.Stack;
+export module RPNpp.stack;
 
 import RPNpp.utilities;
 
