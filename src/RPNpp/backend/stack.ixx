@@ -24,6 +24,7 @@ namespace RPNpp
 		StackErrorData(ErrorCondition e) : m_err{ e } {}
 
 		ErrorCondition error() const { return m_err; }
+		static const string Message(ErrorCondition ec);
 
 	private:
 		ErrorCondition m_err;
@@ -66,6 +67,20 @@ namespace RPNpp
 		std::deque<double> m_stack;
 	};
 
+	const string StackErrorData::Message(ErrorCondition ec)
+	{
+		switch (ec)
+		{
+		case ErrorCondition::Empty:
+			return "Stack is empty";
+		case ErrorCondition::TooFewArguments:
+			return "Too few arguments for stack operation";
+		default:
+			return "Unknown stack error";
+		}
+	}
+
+
 	Stack& Stack::Instance()
 	{
 		static Stack stack;
@@ -76,7 +91,7 @@ namespace RPNpp
 	void Stack::push(double val)
 	{
 		m_stack.push_back(val);
-		stackEvent.notify(stackError(), nullptr);
+		stackEvent.notify(stackChanged(), nullptr);
 	}
 
 
