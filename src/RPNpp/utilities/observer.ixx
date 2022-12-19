@@ -12,7 +12,7 @@ namespace RPNpp
 	export class Observer
 	{
 	public:
-		explicit Observer(string &&name) : m_name(std::move(name)) {}
+		explicit Observer(string name) : m_name(std::move(name)) {}
 		virtual ~Observer() = default;
 
 		virtual void onEvent(const std::any &data) = 0;
