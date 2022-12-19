@@ -33,5 +33,8 @@
     <ClCompile Include="utilities\utilities.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="backend\command.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
