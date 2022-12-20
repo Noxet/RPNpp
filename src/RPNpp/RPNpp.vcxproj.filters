@@ -36,5 +36,8 @@
     <ClCompile Include="backend\command.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="backend\command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

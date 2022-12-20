@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="app\RPNpp.cpp" />
+    <ClCompile Include="backend\command.cpp" />
     <ClCompile Include="backend\command.ixx" />
     <ClCompile Include="backend\stack.ixx" />
     <ClCompile Include="utilities\exception.ixx" />
