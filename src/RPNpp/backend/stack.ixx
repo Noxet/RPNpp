@@ -50,6 +50,7 @@ namespace RPNpp
 		std::vector<double> getElements(int maxSize) const;
 		void swapTop();
 		void clear();
+		size_t size() const;
 
 		static string stackChanged() { return "stackChanged"; }
 		static string stackError() { return "stackError"; }
@@ -153,6 +154,12 @@ namespace RPNpp
 	{
 		m_stack.clear();
 		stackEvent.notify(stackChanged(), nullptr);
+	}
+
+
+	size_t Stack::size() const
+	{
+		return m_stack.size();
 	}
 
 
