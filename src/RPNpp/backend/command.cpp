@@ -1,9 +1,13 @@
 module;
 
+#include <functional>
+
 module RPNpp.command;
 
 import RPNpp.stack;
 import RPNpp.utilities;
+
+using std::function;
 
 namespace RPNpp
 {
@@ -24,6 +28,9 @@ namespace RPNpp
 	 ********** UNARY COMMAND DECLARATION **********
 	 */
 
+	UnaryCommand::UnaryCommand(function<unaryCommandOp> f) : m_top{}, m_func{ f } {}
+
+
 	void UnaryCommand::checkPreconditionsImpl() const
 	{
 		if (Stack::Instance().size() < 1)
@@ -37,7 +44,7 @@ namespace RPNpp
 	{
 		auto &stack = Stack::Instance();
 		const auto top = stack.pop();
-		stack.push(unaryOperation(top));
+		stack.push(m_func(top));
 
 		// save the previous top for undo
 		m_top = top;
@@ -50,6 +57,15 @@ namespace RPNpp
 		stack.pop();
 		stack.push(m_top);
 	}
+
+
+	UnaryCommand* UnaryCommand::cloneImpl() const
+	{
+		return new UnaryCommand{ *this };
+	}
+
+
+	BinaryCommand::BinaryCommand(function<binaryCommandOp> f) : m_a{}, m_b{}, m_func{ f } {}
 
 
 	/*
@@ -70,7 +86,7 @@ namespace RPNpp
 		auto &stack = Stack::Instance();
 		const auto a = stack.pop();
 		const auto b = stack.pop();
-		stack.push(binaryOperation(a, b));
+		stack.push(m_func(a, b));
 
 		// save the previous two values for undo
 		m_a = a;
@@ -85,5 +101,11 @@ namespace RPNpp
 		stack.pop();
 		stack.push(m_b);
 		stack.push(m_a);
+	}
+
+
+	BinaryCommand* BinaryCommand::cloneImpl() const
+	{
+		return new BinaryCommand{ *this };
 	}
 }

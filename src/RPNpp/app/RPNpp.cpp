@@ -1,5 +1,6 @@
 import RPNpp.stack;
 import RPNpp.utilities;
+import RPNpp.command;
 
 #include <any>
 #include <iostream>
@@ -58,9 +59,13 @@ int main()
 	stack.stackEvent.attach(Stack::stackError(), std::make_unique<StackErrorObserver>("StackErrorObserver"));
 	stack.stackEvent.attach(Stack::stackChanged(), std::make_unique<StackChangedObserver>("StackChangedObserver"));
 
+	BinaryCommand add{ [](double a, double b) { return a + b; } };
+
 	try
 	{
 		stack.push(13.37);
+		stack.push(69);
+		add.execute();
 		cout << stack.pop() << endl;
 		stack.pop();
 	}

@@ -1,4 +1,10 @@
+module;
+
+#include <functional>
+
 export module RPNpp.command;
+
+using std::function;
 
 namespace RPNpp
 {
@@ -8,6 +14,7 @@ namespace RPNpp
 	export class Command
 	{
 	public:
+		Command() = default;
 		virtual ~Command() = default;
 		void execute();
 		void undo();
@@ -18,8 +25,8 @@ namespace RPNpp
 		 */
 		Command* clone() const { return cloneImpl(); }
 
-		/* Deleted ctors */
-		Command(const Command &) = delete;
+		/* ctors */
+		Command(const Command &) = default;
 		Command(Command &&) = delete;
 		Command& operator=(const Command &) = delete;
 		Command& operator=(Command &&) = delete;
@@ -45,13 +52,16 @@ namespace RPNpp
 	};
 
 
-	export class UnaryCommand : public Command
+	export class UnaryCommand final : public Command
 	{
-	public:
-		virtual ~UnaryCommand() = default;
+		using unaryCommandOp = double(double);
 
-		/* Deleted ctors */
-		UnaryCommand(const UnaryCommand &) = delete;
+	public:
+		explicit UnaryCommand(function<unaryCommandOp> f);
+		virtual ~UnaryCommand() override = default;
+
+		/* ctors */
+		UnaryCommand(const UnaryCommand &) = default;
 		UnaryCommand(UnaryCommand &&) = delete;
 		UnaryCommand &operator=(const UnaryCommand &) = delete;
 		UnaryCommand &operator=(UnaryCommand &&) = delete;
@@ -60,21 +70,25 @@ namespace RPNpp
 		void checkPreconditionsImpl() const override;
 
 	private:
-		void executeImpl() noexcept override final;
-		void undoImpl() noexcept override final;
-		virtual double unaryOperation(double val) const = 0;
+		void executeImpl() noexcept override;
+		void undoImpl() noexcept override;
+		UnaryCommand *cloneImpl() const override;
 
 		double m_top;
+		function<unaryCommandOp> m_func;
 	};
 
 
-	export class BinaryCommand : public Command
+	export class BinaryCommand final : public Command
 	{
-	public:
-		virtual ~BinaryCommand() = default;
+		using binaryCommandOp = double(double, double);
 
-		/* Deleted ctors */
-		BinaryCommand(const BinaryCommand &) = delete;
+	public:
+		explicit BinaryCommand(function<binaryCommandOp> f);
+		virtual ~BinaryCommand() override = default;
+
+		/* ctors */
+		BinaryCommand(const BinaryCommand &) = default;
 		BinaryCommand(BinaryCommand &&) = delete;
 		BinaryCommand &operator=(const BinaryCommand &) = delete;
 		BinaryCommand &operator=(BinaryCommand &&) = delete;
@@ -83,11 +97,12 @@ namespace RPNpp
 		void checkPreconditionsImpl() const override;
 
 	private:
-		void executeImpl() noexcept override final;
-		void undoImpl() noexcept override final;
-		virtual double binaryOperation(double a, double b) const = 0;
+		void executeImpl() noexcept override;
+		void undoImpl() noexcept override;
+		BinaryCommand *cloneImpl() const override;
 
 		double m_a;
 		double m_b;
+		function<binaryCommandOp> m_func;
 	};
 }
