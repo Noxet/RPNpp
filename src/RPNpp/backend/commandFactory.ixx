@@ -66,4 +66,20 @@ namespace RPNpp
 			m_factory.emplace(s, std::move(cmd));
 		}
 	}
+
+	/**
+	 * Global function to register all basic core commands.
+	 * This is not a member function to avoid coupling between the factory
+	 * and all the commands.
+	 */
+	export void registerCoreCommands()
+	{
+		// TODO: How to override checkPreconditionsImpl?
+		auto &cmdf = CommandFactory::Instance();
+
+		cmdf.registerCommand("+", std::make_unique<BinaryCommand>([](const double a, const double b) {return a + b; }));
+		cmdf.registerCommand("-", std::make_unique<BinaryCommand>([](const double a, const double b) {return a - b; }));
+		cmdf.registerCommand("*", std::make_unique<BinaryCommand>([](const double a, const double b) {return a * b; }));
+		cmdf.registerCommand("/", std::make_unique<BinaryCommand>([](const double a, const double b) {return a / b; }));
+	}
 }
