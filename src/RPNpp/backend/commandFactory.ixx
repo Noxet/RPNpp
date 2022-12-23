@@ -4,7 +4,7 @@ module;
 #include <string>
 #include <unordered_map>
 
-export module RPNpp.commandFactory;
+export module RPNpp.commandDispatcher:commandFactory;
 
 import RPNpp.command;
 
@@ -17,13 +17,30 @@ namespace RPNpp
 	export class CommandFactory
 	{
 	public:
+		static CommandFactory& Instance();
 		unique_ptr<Command> createCommand(const string &s) const;
 		void registerCommand(const string &s, unique_ptr<Command> cmd);
 
+
+		CommandFactory(const CommandFactory &) = delete;
+		CommandFactory &operator=(CommandFactory &) = delete;
+		CommandFactory(const CommandFactory &&) = delete;
+		CommandFactory &operator=(CommandFactory &&) = delete;
+
 	private:
+		CommandFactory() = default;
+		~CommandFactory() = default;
+
 		using Factory = unordered_map<string, unique_ptr<Command>>;
 		Factory m_factory;
 	};
+
+
+	CommandFactory& CommandFactory::Instance()
+	{
+		static CommandFactory instance;
+		return instance;
+	}
 
 
 	unique_ptr<Command> CommandFactory::createCommand(const std::string &s) const
