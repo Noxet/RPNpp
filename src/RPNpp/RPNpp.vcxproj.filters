@@ -42,5 +42,8 @@
     <ClCompile Include="backend\commandFactory.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="backend\commandManager.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
