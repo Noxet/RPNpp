@@ -98,7 +98,6 @@ namespace RPNpp
 	{
 		auto &stack = Stack::Instance();
 		stack.pop();
-		stack.pop();
 		stack.push(m_b);
 		stack.push(m_a);
 	}
