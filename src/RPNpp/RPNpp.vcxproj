@@ -145,6 +145,7 @@
     <ClCompile Include="app\RPNpp.cpp" />
     <ClCompile Include="backend\command.cpp" />
     <ClCompile Include="backend\command.ixx" />
+    <ClCompile Include="backend\commandDispatcher.ixx" />
     <ClCompile Include="backend\commandFactory.ixx" />
     <ClCompile Include="backend\commandManager.ixx" />
     <ClCompile Include="backend\stack.ixx" />

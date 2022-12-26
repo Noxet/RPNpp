@@ -1,9 +1,12 @@
 import RPNpp.stack;
 import RPNpp.utilities;
 import RPNpp.command;
+import RPNpp.commandManager;
+import RPNpp.commandDispatcher;
 
 #include <any>
 #include <iostream>
+#include <vector>
 
 using namespace RPNpp;
 using std::string;
@@ -51,6 +54,19 @@ namespace
 }
 
 
+void printStack()
+{
+	auto &stack = Stack::Instance();
+	const auto &elems = stack.getElements(10);
+	cout << "Elements on stack: ";
+	for (const auto &elem : elems)
+	{
+		cout << elem << ", ";
+	}
+	cout << endl;
+}
+
+
 int main()
 {
 	auto &stack = Stack::Instance();
@@ -59,15 +75,24 @@ int main()
 	stack.stackEvent.attach(Stack::stackError(), std::make_unique<StackErrorObserver>("StackErrorObserver"));
 	stack.stackEvent.attach(Stack::stackChanged(), std::make_unique<StackChangedObserver>("StackChangedObserver"));
 
-	BinaryCommand add{ [](double a, double b) { return a + b; } };
+	registerCoreCommands();
 
 	try
 	{
+		auto &cf = CommandFactory::Instance();
+		CommandManager cm;
+		auto add = cf.createCommand("+");
+		//cm.executeCommand(std::move(add));
+
 		stack.push(13.37);
 		stack.push(69);
-		add.execute();
-		cout << stack.pop() << endl;
-		stack.pop();
+		printStack();
+		cm.executeCommand(std::move(add));
+		printStack();
+		cm.undo();
+		printStack();
+		cm.redo();
+		printStack();
 	}
 	catch (Exception &e)
 	{
