@@ -147,6 +147,8 @@
     <ClCompile Include="backend\command.ixx" />
     <ClCompile Include="backend\commandDispatcher.ixx" />
     <ClCompile Include="backend\commandFactory.ixx" />
+    <ClCompile Include="backend\commandInterpreter.cpp" />
+    <ClCompile Include="backend\commandInterpreter.ixx" />
     <ClCompile Include="backend\commandManager.ixx" />
     <ClCompile Include="backend\stack.ixx" />
     <ClCompile Include="utilities\exception.ixx" />

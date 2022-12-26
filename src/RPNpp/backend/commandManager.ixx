@@ -3,7 +3,7 @@ module;
 #include <memory>
 #include <stack>
 
-export module RPNpp.commandManager;
+export module RPNpp.commandDispatcher:commandManager;
 
 import RPNpp.command;
 

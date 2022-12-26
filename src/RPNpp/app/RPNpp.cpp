@@ -1,7 +1,7 @@
 import RPNpp.stack;
 import RPNpp.utilities;
 import RPNpp.command;
-import RPNpp.commandManager;
+//import RPNpp.commandManager;
 import RPNpp.commandDispatcher;
 
 #include <any>

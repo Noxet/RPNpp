@@ -48,5 +48,11 @@
     <ClCompile Include="backend\commandDispatcher.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="backend\commandInterpreter.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="backend\commandInterpreter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
