@@ -8,6 +8,7 @@ module RPNpp.commandDispatcher:commandInterpreter;
 import RPNpp.command;
 import RPNpp.stack;
 import RPNpp.utils;
+import RPNpp.utilities;
 import :commandManager;
 import :commandFactory;
 
@@ -48,8 +49,21 @@ namespace RPNpp
 		}
 		else
 		{
-			auto cmd = CommandFactory::Instance().createCommand(command);
-			m_commandManager.executeCommand(std::move(cmd));
+			if (auto cmd = CommandFactory::Instance().createCommand(command))
+			{
+				try
+				{
+					m_commandManager.executeCommand(std::move(cmd));
+				}
+				catch (Exception e)
+				{
+					// TODO: post message to UI
+				}
+			}
+			else
+			{
+				// TODO: post message to UI
+			}
 		}
 	}
 
