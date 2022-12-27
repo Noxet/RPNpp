@@ -152,6 +152,7 @@
     <ClCompile Include="backend\commandManager.ixx" />
     <ClCompile Include="backend\stack.ixx" />
     <ClCompile Include="backend\utils.ixx" />
+    <ClCompile Include="ui\userInterface.ixx" />
     <ClCompile Include="utilities\exception.ixx" />
     <ClCompile Include="utilities\observer.ixx" />
     <ClCompile Include="utilities\publisher.ixx" />
