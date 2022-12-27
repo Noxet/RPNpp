@@ -1,11 +1,11 @@
+#include <any>
+#include <iostream>
+
 import RPNpp.stack;
 import RPNpp.utilities;
 import RPNpp.command;
 import RPNpp.commandDispatcher;
-
-#include <any>
-#include <iostream>
-#include <vector>
+import RPNpp.userInterfaces;
 
 using namespace RPNpp;
 using std::string;
@@ -66,6 +66,16 @@ void printStack()
 }
 
 
+class CLI : public UserInterface
+{
+public:
+	void postMessage(std::string_view strView) override { cout << strView << endl; }
+	void stackChanged() override {}
+
+	void command(const string &cmd) { notify(cmd); }
+};
+
+
 int main()
 {
 	auto &stack = Stack::Instance();
@@ -79,19 +89,21 @@ int main()
 	try
 	{
 		auto &cf = CommandFactory::Instance();
-		UserInterface ui;
-		CommandInterpreter ci{ ui };
+		CLI ui;
+		ui.uiEvent.attach(UserInterface::commandEntered(), std::move(std::make_unique<CommandInterpreter>(ui)));
+
+
 		auto add = cf.createCommand("+");
 		//cm.executeCommand(std::move(add));
 
-		ci.executeCommand("13.37");
-		ci.executeCommand("69");
+		ui.command("13.37");
+		ui.command("69");
 		printStack();
-		ci.executeCommand("+");
+		ui.command("+");
 		printStack();
-		ci.executeCommand("undo");
+		ui.command("undo");
 		printStack();
-		ci.executeCommand("redo");
+		ui.command("redo");
 		printStack();
 	}
 	catch (Exception &e)

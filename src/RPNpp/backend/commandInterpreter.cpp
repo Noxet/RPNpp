@@ -1,5 +1,8 @@
 module;
 
+#include <any>
+#include <format>
+#include <iostream>
 #include <string>
 #include <memory>
 
@@ -9,6 +12,7 @@ import RPNpp.command;
 import RPNpp.stack;
 import RPNpp.utils;
 import RPNpp.utilities;
+import RPNpp.userInterfaces;
 import :commandManager;
 import :commandFactory;
 
@@ -17,8 +21,6 @@ namespace RPNpp
 {
 	class CommandInterpreter::CommandInterpreterImpl
 	{
-		//class UserInterface;
-
 	public:
 		explicit CommandInterpreterImpl(UserInterface &ui);
 
@@ -68,9 +70,9 @@ namespace RPNpp
 	}
 
 
-	CommandInterpreter::CommandInterpreter(UserInterface &ui) : m_impl{
-		std::make_unique<CommandInterpreterImpl>(ui)
-	} { }
+	CommandInterpreter::CommandInterpreter(UserInterface &ui) :
+		Observer{ "commandInterpreter" },
+		m_impl{ std::make_unique<CommandInterpreterImpl>(ui) } { }
 
 
 	CommandInterpreter::~CommandInterpreter() { }
@@ -79,5 +81,20 @@ namespace RPNpp
 	void RPNpp::CommandInterpreter::executeCommand(const std::string &command)
 	{
 		m_impl->executeCommand(command);
+	}
+
+
+	void RPNpp::CommandInterpreter::onEvent(const std::any &data)
+	{
+		try
+		{
+			const auto &command = std::any_cast<std::string>(data);
+			executeCommand(command);
+		}
+		catch (const std::bad_any_cast &e)
+		{
+			std::cout << std::format("[CommandInterpreter.onEvent] - {}", e.what()) << std::endl;
+			// TODO: Let UI know about the error
+		}
 	}
 }
