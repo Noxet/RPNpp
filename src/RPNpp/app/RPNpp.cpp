@@ -1,7 +1,6 @@
 import RPNpp.stack;
 import RPNpp.utilities;
 import RPNpp.command;
-//import RPNpp.commandManager;
 import RPNpp.commandDispatcher;
 
 #include <any>
@@ -80,18 +79,19 @@ int main()
 	try
 	{
 		auto &cf = CommandFactory::Instance();
-		CommandManager cm;
+		UserInterface ui;
+		CommandInterpreter ci{ ui };
 		auto add = cf.createCommand("+");
 		//cm.executeCommand(std::move(add));
 
-		stack.push(13.37);
-		stack.push(69);
+		ci.executeCommand("13.37");
+		ci.executeCommand("69");
 		printStack();
-		cm.executeCommand(std::move(add));
+		ci.executeCommand("+");
 		printStack();
-		cm.undo();
+		ci.executeCommand("undo");
 		printStack();
-		cm.redo();
+		ci.executeCommand("redo");
 		printStack();
 	}
 	catch (Exception &e)
