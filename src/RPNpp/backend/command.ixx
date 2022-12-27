@@ -105,4 +105,25 @@ namespace RPNpp
 		double m_b;
 		function<binaryCommandOp> m_func;
 	};
+
+
+	export class EnterCommand final : public Command
+	{
+	public:
+		EnterCommand(double d);
+		//virtual ~EnterCommand() override = default;
+
+		/* ctors */
+		EnterCommand(const EnterCommand &) = default;
+		EnterCommand(EnterCommand &&) = delete;
+		EnterCommand &operator=(const EnterCommand &) = delete;
+		EnterCommand &operator=(EnterCommand &&) = delete;
+
+	private:
+		void executeImpl() noexcept override;
+		void undoImpl() noexcept override;
+		Command * cloneImpl() const override;
+
+		double m_val;
+	};
 }

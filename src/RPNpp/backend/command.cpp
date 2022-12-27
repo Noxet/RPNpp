@@ -107,4 +107,25 @@ namespace RPNpp
 	{
 		return new BinaryCommand{ *this };
 	}
+
+
+	EnterCommand::EnterCommand(const double d) : m_val{ d } {}
+
+
+	void EnterCommand::executeImpl() noexcept
+	{
+		Stack::Instance().push(m_val);
+	}
+
+
+	void EnterCommand::undoImpl() noexcept
+	{
+		Stack::Instance().pop();
+	}
+
+
+	Command* EnterCommand::cloneImpl() const
+	{
+		return new EnterCommand{ *this };
+	}
 }
