@@ -1,13 +1,16 @@
 module;
 
-#include <algorithm>
+#include <format>
 #include <string_view>
 #include <string>
 #include <sstream>
+#include <istream>
 #include <vector>
 
 export module RPNpp.userInterfaces:CLI;
 
+import RPNpp.utils;
+import RPNpp.stack;
 import :UserInterface;
 
 namespace RPNpp
@@ -17,14 +20,12 @@ namespace RPNpp
 	public:
 		CLI(std::istream &in, std::ostream &out);
 
-		void run();
+		void run() const;
 
 	private:
 		/* These should only be called through a UserInterface reference, hence they are in the private scope. */
 		void postMessage(std::string_view strView) override;
 		void stackChanged() override;
-
-		std::vector<std::string> tokenize(std::istream &is);
 
 		std::istream &m_in;
 		std::ostream &m_out;
@@ -34,31 +35,36 @@ namespace RPNpp
 	CLI::CLI(std::istream &in, std::ostream &out) : m_in{ in }, m_out{ out } {}
 
 
-	void CLI::run()
+	void CLI::run() const
 	{
 		for (std::string line; std::getline(m_in, line); )
 		{
-			std::istringstream iss{ line };
-			for (const auto &token : tokenize(iss))
+			m_out << "CLI RUN" << std::endl;
+			std::stringstream ss{ line };
+			for (const auto &token : Utils::tokenize(ss))
 			{
 				if (token == "exit" || token == "quit") return;
-				uiEvent.notify(commandEntered(), token);
+				notify(token);
 			}
 		}
 	}
 
 
-	void CLI::postMessage(std::string_view strView) {}
-	void CLI::stackChanged() {}
-	std::vector<std::string> CLI::tokenize(std::istream &is)
+	void CLI::postMessage(std::string_view strView)
 	{
-		std::vector<std::string> tokens{};
-		for (std::istream_iterator<std::string> i{is}; i != std::istream_iterator<std::string>{}; ++i)
-		{
-			std::string t;
-			std::ranges::transform(*i, std::back_inserter<std::string>(t), ::tolower);
-			tokens.push_back(std::move(t));
-		}
-		return tokens;
+		m_out << strView << std::endl;
 	}
+
+
+	void CLI::stackChanged()
+	{
+		m_out << "Current stack:\n";
+		int index{ 0 };
+		for (const auto &item : Stack::Instance().getElements(4))
+		{
+			m_out << std::format("{}: {}\n", ++index, item);
+		}
+		m_out << std::format("{:->20}") << std::endl;
+	}
+
 }

@@ -66,16 +66,6 @@ void printStack()
 }
 
 
-class CLI : public UserInterface
-{
-public:
-	void postMessage(std::string_view strView) override { cout << strView << endl; }
-	void stackChanged() override {}
-
-	void command(const string &cmd) { notify(cmd); }
-};
-
-
 int main()
 {
 	auto &stack = Stack::Instance();
@@ -89,22 +79,14 @@ int main()
 	try
 	{
 		auto &cf = CommandFactory::Instance();
-		CLI ui;
+		CLI ui(std::cin, std::cout);
 		ui.uiEvent.attach(UserInterface::commandEntered(), std::move(std::make_unique<CommandInterpreter>(ui)));
 
 
-		auto add = cf.createCommand("+");
-		//cm.executeCommand(std::move(add));
+		/*auto add = cf.createCommand("+");
+		cm.executeCommand(std::move(add));*/
 
-		ui.command("13.37");
-		ui.command("69");
-		printStack();
-		ui.command("+");
-		printStack();
-		ui.command("undo");
-		printStack();
-		ui.command("redo");
-		printStack();
+		ui.run();
 	}
 	catch (Exception &e)
 	{
