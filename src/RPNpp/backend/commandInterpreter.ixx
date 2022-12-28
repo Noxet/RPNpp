@@ -19,7 +19,7 @@ namespace RPNpp
 		explicit CommandInterpreter(UserInterface &ui);
 		~CommandInterpreter() override;
 
-		void executeCommand(const std::string &command);
+		void handleCommand(const std::string &command);
 
 		void onEvent(const ::std::any &data) override;
 

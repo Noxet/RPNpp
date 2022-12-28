@@ -63,5 +63,8 @@
     <ClCompile Include="ui\userInterfaces.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ui\cli.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

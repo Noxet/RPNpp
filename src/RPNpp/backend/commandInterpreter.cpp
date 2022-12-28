@@ -78,7 +78,7 @@ namespace RPNpp
 	CommandInterpreter::~CommandInterpreter() { }
 
 
-	void RPNpp::CommandInterpreter::executeCommand(const std::string &command)
+	void RPNpp::CommandInterpreter::handleCommand(const std::string &command)
 	{
 		m_impl->executeCommand(command);
 	}
@@ -89,7 +89,7 @@ namespace RPNpp
 		try
 		{
 			const auto &command = std::any_cast<std::string>(data);
-			executeCommand(command);
+			handleCommand(command);
 		}
 		catch (const std::bad_any_cast &e)
 		{
