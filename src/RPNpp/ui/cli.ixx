@@ -64,7 +64,8 @@ namespace RPNpp
 		{
 			m_out << std::format("{}: {}\n", ++index, item);
 		}
-		m_out << std::format("{:->20}") << std::endl;
+		//m_out << std::format("{:->20}") << std::endl;
+		m_out << std::string(10, '-') << std::endl;
 	}
 
 }

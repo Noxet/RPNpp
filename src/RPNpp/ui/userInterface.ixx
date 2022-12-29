@@ -1,5 +1,6 @@
 module;
 
+#include <any>
 #include <string>
 #include <string_view>
 
@@ -25,5 +26,20 @@ namespace RPNpp
 
 	protected:
 		void notify(const std::string &cmd) const { uiEvent.notify(commandEntered(), cmd); };
+	};
+
+
+	/**
+	 * Class to act as an observer proxy for the UI
+	 */
+	export class UIObserver : public Observer
+	{
+	public:
+		explicit UIObserver(UserInterface &ui) : Observer("UIObserver"), m_ui{ ui } {}
+
+		void onEvent(const std::any &data) override { m_ui.stackChanged(); }
+
+	private:
+		UserInterface &m_ui;
 	};
 }
